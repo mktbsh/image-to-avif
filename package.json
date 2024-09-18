@@ -1,0 +1,25 @@
+{
+  "name": "img2avif",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "bundle": "bun build --bundle --minify src/main.ts --outfile dist/bin.js --target node",
+    "prebundle": "rm -rf dist",
+    "postbundle": "bun shim.ts && cp node_modules/wasm-image-optimization-avif/dist/esm/libImage.wasm dist",
+    "compile": "bun build --compile dist/bin.js --minify --outfile dist/img2avif",
+    "build": "bun run bundle && bun run compile",
+    "postbuild": "rm dist/bin.js dist/libImage.wasm",
+    "deploy": "cp dist/img2avif ~/commands/."
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "image-meta": "^0.2.1",
+    "nanotar": "^0.1.1",
+    "wasm-image-optimization-avif": "^0.0.3"
+  }
+}
